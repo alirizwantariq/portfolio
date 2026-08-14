@@ -654,7 +654,9 @@ strong { font-weight: 600; color: var(--ink); }
 /* ---------- Quotes ---------- */
 .quotes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  /* 19rem lets all three sit side by side at desktop widths; below that they
+     fall to two, then one. */
+  grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
   gap: 1.25rem;
   margin-top: 2.5rem;
 }
@@ -662,21 +664,32 @@ strong { font-weight: 600; color: var(--ink); }
   display: flex;
   flex-direction: column;
   gap: 1.35rem;
-  padding: clamp(1.6rem, 3vw, 2.1rem);
+  padding: clamp(1.5rem, 2.6vw, 1.9rem);
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
+.quote blockquote { display: grid; gap: 0.85rem; }
 .quote blockquote p {
-  font-size: 1.125rem;
-  line-height: 1.65;
+  font-size: 1.0625rem;
+  line-height: 1.62;
   color: var(--ink-2);
 }
-.quote blockquote p::before { content: "\201C"; }
-.quote blockquote p::after { content: "\201D"; }
-.quote figcaption { margin-top: auto; display: grid; gap: 0.15rem; }
-.quote-name { font-size: 1.0625rem; font-weight: 600; color: var(--ink); }
-.quote-role { font-size: 0.9375rem; color: var(--ink-3); }
+/* Quotation marks are literal characters in the HTML, not pseudo-elements —
+   generated content picked up the source indentation and rendered as
+   “ Rizwan … team. ” with visible gaps. Multi-paragraph quotes open each
+   paragraph and close only at the very end, per convention. */
+
+.quote figcaption {
+  margin-top: auto;
+  display: grid;
+  gap: 0.2rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--line-soft);
+}
+.quote-name { font-size: 1.0625rem; font-weight: 600; color: var(--ink); margin-top: 0.5rem; }
+.quote-role { font-size: 0.9375rem; color: var(--ink-2); line-height: 1.45; }
+.quote-rel { font-size: 0.875rem; color: var(--ink-3); }
 .quotes-note { margin-top: 1.5rem; font-size: 0.9375rem; color: var(--ink-3); }
 
 /* ---------- Toolkit ---------- */
