@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Add your real domain here once deployed, e.g.
+# Sitemap: https://alirizwantariq.com/sitemap.xml

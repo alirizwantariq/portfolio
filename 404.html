@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Ali Rizwan Tariq</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/styles.css">
+<script>
+  (function () {
+    document.documentElement.classList.add('js');
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+<style>
+  .notfound { display: grid; place-items: center; min-height: 100vh; text-align: center; }
+  .notfound .code { font-family: var(--font-mono); font-size: 0.8125rem; letter-spacing: 0.14em; color: var(--ink-3); margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+<main class="notfound">
+  <div class="wrap">
+    <p class="code">404</p>
+    <h1 class="hero-title" style="max-width:20ch;margin-inline:auto">That page isn't here.</h1>
+    <p style="color:var(--ink-2);max-width:44ch;margin:0 auto 2rem">
+      The link is either old or mistyped. Everything lives on the one page.
+    </p>
+    <p><a class="btn btn-primary" href="/">Back to the homepage</a></p>
+  </div>
+</main>
+</body>
+</html>
