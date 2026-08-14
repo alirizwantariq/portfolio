@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# Add your real domain here once deployed, e.g.
-# Sitemap: https://alirizwantariq.com/sitemap.xml
+Sitemap: https://portfolio-roan-iota-47.vercel.app/sitemap.xml

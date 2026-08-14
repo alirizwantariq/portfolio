@@ -3,7 +3,7 @@
 A single-page portfolio. Plain HTML, CSS and JavaScript — no framework, no build
 step, no dependencies. Open `index.html` and it works.
 
-**Live site:** _add the URL here after your first deploy_
+**Live site:** <https://portfolio-roan-iota-47.vercel.app/>
 
 ---
 
@@ -87,14 +87,15 @@ Criteria drawn from:
 - [QuickCV — I tested 8 ATS systems to see how they actually parse resumes](https://quickcv.io/blog/i-tested-8-ats-systems-to-see-how-they-actually-parse-resumes)
 - [Resume Optimizer Pro — ATS resume best practices 2026, and what now backfires](https://resumeoptimizerpro.com/blog/ats-friendly-resume-tips)
 
-## After deploying
+## If you move to a custom domain
 
-Two small things to update once you know your domain:
+Five absolute URLs are pinned to the current Vercel domain. Search and replace
+`portfolio-roan-iota-47.vercel.app` with the new one across:
 
-1. `robots.txt` — uncomment the `Sitemap:` line and set your domain.
-2. `index.html` — change `og:image` and `twitter:image` from `/og.png` to the
-   absolute URL (`https://yourdomain.com/og.png`). Some social scrapers
-   won't resolve relative image paths.
+- `index.html` — `canonical`, `og:url`, `og:image`, `twitter:image`, and the
+  `image` / `url` fields in the JSON-LD block
+- `robots.txt` — the `Sitemap:` line
+- `sitemap.xml` — the `<loc>` value
 
 ## Licence
 
