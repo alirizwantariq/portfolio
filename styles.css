@@ -652,27 +652,33 @@ strong { font-weight: 600; color: var(--ink); }
 .edu-dates { color: var(--ink-3); margin-left: 0.4rem; font-variant-numeric: tabular-nums; }
 
 /* ---------- Quotes ---------- */
-.quotes {
-  display: grid;
-  /* 19rem lets all three sit side by side at desktop widths; below that they
-     fall to two, then one. */
-  grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
-  gap: 1.25rem;
-  margin-top: 2.5rem;
-}
+/* The three recommendations differ a lot in length (118 words vs 52). Side-by-side
+   cards either stretch to equal height and leave the short ones half empty, or go
+   ragged; multi-column balances badly because each card is unbreakable. So each
+   recommendation is a full-width row — attribution left, quote right — the same
+   shape as the experience timeline. Length differences stop mattering, and the
+   quote keeps a readable measure instead of running the full page width. */
+.quotes { display: grid; margin-top: 2.5rem; }
+
 .quote {
-  display: flex;
-  flex-direction: column;
-  gap: 1.35rem;
-  padding: clamp(1.5rem, 2.6vw, 1.9rem);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  display: grid;
+  gap: 1rem 2.75rem;
+  padding-block: 2.25rem;
+  border-top: 1px solid var(--line);
 }
-.quote blockquote { display: grid; gap: 0.85rem; }
+.quote:last-of-type { border-bottom: 1px solid var(--line); }
+
+@media (min-width: 60rem) {
+  .quote { grid-template-columns: minmax(11rem, 15rem) 1fr; }
+  /* Attribution sits in the left rail. The DOM keeps blockquote before
+     figcaption, which is the correct reading order for a <figure>. */
+  .quote figcaption { grid-column: 1; grid-row: 1; }
+  .quote blockquote  { grid-column: 2; grid-row: 1; }
+}
+.quote blockquote { display: grid; gap: 0.85rem; max-width: 62ch; }
 .quote blockquote p {
   font-size: 1.0625rem;
-  line-height: 1.62;
+  line-height: 1.65;
   color: var(--ink-2);
 }
 /* Quotation marks are literal characters in the HTML, not pseudo-elements —
@@ -681,13 +687,11 @@ strong { font-weight: 600; color: var(--ink); }
    paragraph and close only at the very end, per convention. */
 
 .quote figcaption {
-  margin-top: auto;
   display: grid;
   gap: 0.2rem;
-  padding-top: 0.35rem;
-  border-top: 1px solid var(--line-soft);
+  align-content: start;
 }
-.quote-name { font-size: 1.0625rem; font-weight: 600; color: var(--ink); margin-top: 0.5rem; }
+.quote-name { font-size: 1.0625rem; font-weight: 600; color: var(--ink); }
 .quote-role { font-size: 0.9375rem; color: var(--ink-2); line-height: 1.45; }
 .quote-rel { font-size: 0.875rem; color: var(--ink-3); }
 .quotes-note { margin-top: 1.5rem; font-size: 0.9375rem; color: var(--ink-3); }
