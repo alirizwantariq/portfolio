@@ -87,15 +87,28 @@ Criteria drawn from:
 - [QuickCV — I tested 8 ATS systems to see how they actually parse resumes](https://quickcv.io/blog/i-tested-8-ats-systems-to-see-how-they-actually-parse-resumes)
 - [Resume Optimizer Pro — ATS resume best practices 2026, and what now backfires](https://resumeoptimizerpro.com/blog/ats-friendly-resume-tips)
 
-## If you move to a custom domain
+## Changing the domain
 
-Five absolute URLs are pinned to the current Vercel domain. Search and replace
-`portfolio-roan-iota-47.vercel.app` with the new one across:
+A few URLs have to be absolute — social scrapers won't resolve a relative
+`og:image`, and `rel=canonical` plus the sitemap `<loc>` must be absolute. So
+the domain is pinned in `index.html`, `robots.txt`, `sitemap.xml` and this file.
 
-- `index.html` — `canonical`, `og:url`, `og:image`, `twitter:image`, and the
-  `image` / `url` fields in the JSON-LD block
-- `robots.txt` — the `Sitemap:` line
-- `sitemap.xml` — the `<loc>` value
+To move to a new domain, change it in Vercel first, then run:
+
+```bash
+node tools/set-domain.mjs your-new-domain.com
+```
+
+Add `--dry-run` to preview. It rewrites every pinned URL and leaves external
+links (LinkedIn, GitHub, Google Fonts) alone. Commit and push, then refresh the
+LinkedIn preview cache at <https://www.linkedin.com/post-inspector/> — it caches
+aggressively and won't pick up the new card on its own.
+
+### Free `.vercel.app` subdomain
+
+Vercel derives the production URL from the project name. Rename the project in
+**Settings → General → Project Name** and the subdomain follows. The random
+suffix appears only when the plain name is already taken globally.
 
 ## Licence
 
