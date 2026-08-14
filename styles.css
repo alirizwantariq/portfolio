@@ -26,17 +26,17 @@ button { font: inherit; color: inherit; }
    Body copy sits at ~9:1 against the page; the quietest metadata
    colour is still above the 4.5:1 WCAG AA floor for normal text. */
 :root {
-  --bg:        #fdfcfa;
-  --bg-alt:    #f4f1ea;
+  --bg:        #fbfaf6;   /* warm paper                       */
+  --bg-alt:    #f2efe6;   /* clay-tinted band                 */
   --surface:   #ffffff;
-  --ink:       #14120d;   /* headings            ~17:1 */
-  --ink-2:     #4a453d;   /* body copy            ~8.9:1 */
-  --ink-3:     #6a6259;   /* metadata, labels     ~5.5:1 */
-  --line:      #e0dad0;
-  --line-soft: #ebe6dc;
-  --accent:    #93441a;   /* links, numbers       ~6.6:1 */
-  --accent-2:  #78360f;
-  --ok:        #1f7a49;
+  --ink:       #131210;   /* headings              ~17:1      */
+  --ink-2:     #4a453d;   /* body copy              ~9.1:1    */
+  --ink-3:     #6b6359;   /* metadata, labels       ~5.6:1    */
+  --line:      #e2dcd0;
+  --line-soft: #ede8dd;
+  --accent:    #9a4520;   /* rust — links, figures  ~6.2:1    */
+  --accent-2:  #7e3616;
+  --ok:        #1c7a4f;   /* the one non-rust hue: "available" */
   --focus:     #1a5cad;
 
   --font-sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -53,34 +53,34 @@ button { font: inherit; color: inherit; }
 /* ---------- Tokens: dark ---------- */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg:        #14130f;
-    --bg-alt:    #1c1b17;
-    --surface:   #1f1e1a;
-    --ink:       #f5f2eb;
-    --ink-2:     #bdb7ad;
-    --ink-3:     #948d83;
-    --line:      #322f2a;
-    --line-soft: #2a2823;
-    --accent:    #e8a06a;
-    --accent-2:  #f2b585;
-    --ok:        #4ec27d;
+    --bg:        #101210;   /* deep ink, faint green cast */
+    --bg-alt:    #171a16;
+    --surface:   #1a1e19;
+    --ink:       #f1eee4;   /* warm ivory                 */
+    --ink-2:     #b9b4a7;   /*                    ~9.0:1  */
+    --ink-3:     #8d887b;   /*                    ~5.3:1  */
+    --line:      #2a2e28;
+    --line-soft: #222621;
+    --accent:    #ea9c60;   /* warm amber         ~8.4:1  */
+    --accent-2:  #f3b181;
+    --ok:        #4fc585;
     --focus:     #7fb0ee;
     --shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 10px 30px -18px rgb(0 0 0 / 0.7);
   }
 }
 
 :root[data-theme="dark"] {
-  --bg:        #14130f;
-  --bg-alt:    #1c1b17;
-  --surface:   #1f1e1a;
-  --ink:       #f5f2eb;
-  --ink-2:     #bdb7ad;
-  --ink-3:     #948d83;
-  --line:      #322f2a;
-  --line-soft: #2a2823;
-  --accent:    #e8a06a;
-  --accent-2:  #f2b585;
-  --ok:        #4ec27d;
+  --bg:        #101210;   /* deep ink, faint green cast */
+  --bg-alt:    #171a16;
+  --surface:   #1a1e19;
+  --ink:       #f1eee4;   /* warm ivory                 */
+  --ink-2:     #b9b4a7;   /*                    ~9.0:1  */
+  --ink-3:     #8d887b;   /*                    ~5.3:1  */
+  --line:      #2a2e28;
+  --line-soft: #222621;
+  --accent:    #ea9c60;   /* warm amber         ~8.4:1  */
+  --accent-2:  #f3b181;
+  --ok:        #4fc585;
   --focus:     #7fb0ee;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.35), 0 10px 30px -18px rgb(0 0 0 / 0.7);
 }
@@ -88,6 +88,7 @@ button { font: inherit; color: inherit; }
 /* ---------- Base ---------- */
 body {
   background: var(--bg);
+  font-variant-numeric: tabular-nums;
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: 1.0625rem;      /* 17px */
@@ -232,8 +233,48 @@ strong { font-weight: 600; color: var(--ink); }
   :root[data-theme="light"] .icon-moon { display: none; }
 }
 
-/* ---------- Hero ---------- */
-.hero { padding-block: clamp(3rem, 9vw, 6rem) clamp(2.5rem, 6vw, 4rem); }
+/* ---------- Hero ----------
+   Trimmed top padding on purpose: a recruiter skimming for 30 seconds should
+   land on name, role, status and the headline without scrolling, with the
+   measured results just under the fold pulling them down. */
+.hero { padding-block: clamp(2rem, 5vw, 3rem) clamp(2.25rem, 5vw, 3.5rem); }
+
+/* Identity registers before anything else. Deliberately stacked — name and
+   role on one line, status on its own — rather than flex-wrapped, which broke
+   to a second line at every width anyway and read as an accident. */
+.identity {
+  display: grid;
+  justify-items: start;
+  gap: 0.8rem;
+  margin-bottom: 1.6rem;
+}
+.identity-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.7rem;
+}
+.identity-name {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.identity-role {
+  position: relative;
+  padding-left: 0.85rem;
+  font-size: 1rem;
+  color: var(--ink-3);
+}
+.identity-role::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  width: 4px; height: 4px;
+  margin-top: -2px;
+  border-radius: 50%;
+  background: var(--accent);
+}
 
 .hero-grid {
   display: grid;
@@ -262,28 +303,28 @@ strong { font-weight: 600; color: var(--ink); }
 }
 
 .hero-title {
-  font-size: clamp(2.5rem, 6.4vw, 4.5rem);
-  line-height: 1.06;
-  letter-spacing: -0.021em;
+  font-size: clamp(2.55rem, 6.6vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.026em;
   max-width: 17ch;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.3rem;
 }
 .hero-title em { color: var(--accent); font-style: italic; }
 
 .hero-pitch { max-width: 62ch; }
 .hero-pitch p {
-  font-size: clamp(1.125rem, 1.55vw, 1.25rem);
+  font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
   color: var(--ink-2);
-  line-height: 1.68;
+  line-height: 1.62;
 }
-.hero-pitch p + p { margin-top: 1.15rem; }
+.hero-pitch p + p { margin-top: 0.95rem; }
 .hero-pitch em { color: var(--ink); font-style: italic; }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 2.25rem;
+  margin-top: 1.6rem;
 }
 
 .btn {
@@ -335,7 +376,7 @@ strong { font-weight: 600; color: var(--ink); }
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem 1.5rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   font-size: 1rem;
 }
 .hero-links a {
@@ -398,7 +439,7 @@ strong { font-weight: 600; color: var(--ink); }
   gap: clamp(1.75rem, 4vw, 2.5rem);
 }
 .stat-num {
-  font-size: clamp(2.5rem, 4.5vw, 3.25rem);
+  font-size: clamp(2.6rem, 4.8vw, 3.5rem);
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--accent);
@@ -435,10 +476,10 @@ strong { font-weight: 600; color: var(--ink); }
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.11em;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-3);
 }
@@ -458,8 +499,8 @@ strong { font-weight: 600; color: var(--ink); }
 
 .section-headline {
   font-size: clamp(1.9rem, 3.6vw, 2.75rem);
-  line-height: 1.15;
-  letter-spacing: -0.017em;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
   max-width: 24ch;
 }
 

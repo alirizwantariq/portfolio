@@ -220,14 +220,29 @@ try {
 
 const baseSize = parseFloat((css.match(/font-size:\s*([\d.]+)rem;\s*\/\* 1[0-9]px/) || [])[1] || '0');
 const basePx = baseSize * 16;
-const pairs = [
-  ['body text (light)', '#4a453d', '#fdfcfa'],
-  ['metadata (light)', '#6a6259', '#fdfcfa'],
-  ['links (light)', '#93441a', '#fdfcfa'],
-  ['body text (dark)', '#bdb7ad', '#14130f'],
-  ['metadata (dark)', '#948d83', '#14130f'],
-  ['links (dark)', '#e8a06a', '#14130f'],
-];
+
+/* Read the palette out of styles.css rather than hardcoding it, so this check
+   can't silently drift the next time the colours are retuned. */
+function tokens(blockRe) {
+  const block = (css.match(blockRe) || [])[0] || '';
+  const out = {};
+  for (const m of block.matchAll(/--([a-z0-9-]+):\s*(#[0-9a-f]{6})/gi)) out[m[1]] = m[2];
+  return out;
+}
+const light = tokens(/:root\s*\{[\s\S]*?\}/);
+const dark = tokens(/:root\[data-theme="dark"\]\s*\{[\s\S]*?\}/);
+
+const pairs = [];
+for (const [label, t] of [['light', light], ['dark', dark]]) {
+  if (!t.bg) continue;
+  pairs.push(
+    [`body text (${label})`, t['ink-2'], t.bg],
+    [`metadata (${label})`, t['ink-3'], t.bg],
+    [`links (${label})`, t.accent, t.bg],
+    [`metadata on band (${label})`, t['ink-3'], t['bg-alt']],
+    [`body on card (${label})`, t['ink-2'], t.surface],
+  );
+}
 const contrastRows = pairs.map(([label, fg, bg]) => {
   const ratio = contrast(fg, bg);
   return [`${label} contrast ${ratio.toFixed(2)}:1`, ratio >= 4.5, ratio >= 4.5 ? '' : 'below WCAG AA 4.5:1'];
