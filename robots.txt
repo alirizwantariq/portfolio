@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://alirizwantariq.vercel.app/sitemap.xml
+Sitemap: https://portfolio-roan-iota-47.vercel.app/sitemap.xml

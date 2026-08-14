@@ -3,7 +3,7 @@
 A single-page portfolio. Plain HTML, CSS and JavaScript — no framework, no build
 step, no dependencies. Open `index.html` and it works.
 
-**Live site:** <https://alirizwantariq.vercel.app/>
+**Live site:** <https://portfolio-roan-iota-47.vercel.app/>
 
 ---
 
